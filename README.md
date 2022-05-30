@@ -10,3 +10,7 @@ A demo module used during my talk: _"Nuxt 3 Modules and Open-Source"_.
 
 - Run `npm run dev:prepare` to generate type stubs.
 - Use `npm run dev` to start [playground](./playground) in development mode.
+
+## License
+
+[MIT License](./LICENSE)
