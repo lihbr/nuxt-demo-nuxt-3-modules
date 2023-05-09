@@ -2,8 +2,8 @@
 
 A demo module used during my talk: _"Nuxt 3 Modules and Open-Source"_.
 
-- [📖 &nbsp;Nuxt 3 Modules documentation](https://v3.nuxtjs.org/guide/going-further/modules)
-- [👩‍🏫 &nbsp;Talk resources](https://diapositiv.lihbr.com/talk/nuxt-3-modules-and-open-source)
+- [📖 &nbsp;Nuxt 3 Modules documentation](https://nuxt.com/docs/guide/going-further/modules)
+- [👩‍🏫 &nbsp;Talk resources](https://lihbr.com/talks/vuelondon/nuxt-3-modules-and-open-source?source=nuxt-3-modules-and-open-source)
 - [💐 &nbsp;More from Lucie](https://lihbr.com/?source=nuxt-3-modules-and-open-source)
 
 ## Development

@@ -1,7 +1,15 @@
-import { defineNuxtModule, createResolver, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir } from '@nuxt/kit'
+import { addCustomTab } from '@nuxt/devtools-kit'
+import { setupDevToolsUI } from './devtools'
 
+// Module options TypeScript interface definition
 export interface ModuleOptions {
-  addPlugin: boolean
+  /**
+   * Enable Nuxt Devtools integration
+   *
+   * @default true
+   */
+  devtools: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -9,27 +17,35 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'my-module',
     configKey: 'myModule'
   },
+  // Default configuration options of the Nuxt module
   defaults: {
-    addPlugin: true
+    devtools: true
   },
   setup (options, nuxt) {
-    // 1. Logging cheesy thing
-    if (new Date().getHours() === 15) {
-      console.warn("It's apero time you fool! What are you starting?!")
-    }
+    // Assets demo
+    const resolver = createResolver(import.meta.url)
 
-    // 2. Updating Nuxt config
-    nuxt.options.ssr = false
+    nuxt.options.css.push(resolver.resolve('./runtime/style.css'))
 
-    // 3.1. Creating a resolver to resolve paths consistently
-    const { resolve } = createResolver(import.meta.url)
-
-    // 3.2. Injecting a stylesheet into app using this module
-    nuxt.options.css.push(resolve('./runtime/style.css'))
-
-    // 3.3. Injecting a plugin into app using this module
-    const plugin = resolve('./runtime/plugin.ts')
+    const plugin = resolver.resolve('./runtime/plugin.ts')
     nuxt.options.build.transpile.push(plugin)
     addPlugin(plugin)
+
+    addImportsDir(resolver.resolve('./runtime/imports'))
+
+    // Devtools demo
+    addCustomTab({
+      name: 'my-module-wordle',
+      title: 'My Module Wordle',
+      icon: 'carbon:edt-loop',
+      view: {
+        type: 'iframe',
+        src: 'https://www.nytimes.com/games/wordle/index.html'
+      }
+    })
+
+    // From the devtools starter
+    if (options.devtools)
+      setupDevToolsUI(nuxt, resolver)
   }
 })

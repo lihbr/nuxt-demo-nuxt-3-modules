@@ -1,10 +1,12 @@
 {
   "name": "my-module",
   "version": "1.0.0",
+  "description": "My new Nuxt module",
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/types.d.ts",
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     }
@@ -15,19 +17,34 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build",
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground"
+    "prepack": "nuxt-module-build && npm run client:build",
+    "client:build": "nuxi generate client",
+    "client:dev": "nuxi dev client --port 3300",
+    "dev": "npm run play:dev",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare client",
+    "play:dev": "nuxi dev playground",
+    "play:prod": "npm run prepack && nuxi dev playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.12"
+    "@nuxt/kit": "^3.4.2",
+    "@nuxt/devtools-kit": "0.4.2",
+    "sirv": "^2.0.2"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.2.0",
-    "@nuxt/schema": "^3.0.0-rc.12",
-    "@nuxtjs/eslint-config-typescript": "^11.0.0",
-    "eslint": "^8.26.0",
-    "nuxt": "^3.0.0-rc.12"
+    "@iconify-json/carbon": "^1.1.16",
+    "@nuxt/devtools": "0.4.2",
+    "@nuxt/devtools-ui-kit": "0.4.2",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/module-builder": "^0.3.0",
+    "@nuxt/schema": "^3.4.2",
+    "@nuxt/test-utils": "^3.4.2",
+    "changelogen": "^0.5.3",
+    "eslint": "^8.39.0",
+    "nuxt": "^3.4.2",
+    "vitest": "^0.30.1"
   }
 }
